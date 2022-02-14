@@ -26,12 +26,14 @@ public class FileTransfer_Server {
             ServerSocket serverSocket = new ServerSocket(2480);					//Server Port: 69696
 
             System.out.println("Server Started...");
+            int client=1;
             //waits for the Client to connect
             while (true) {
                 Socket socket = serverSocket.accept();
-                System.out.println("Client connected..");
+                System.out.println("Client "+(client)+" connected..");
             // new Server Thread Start.....
-            ServerThread obj=new ServerThread(socket);
+            ServerThread obj=new ServerThread(socket,client);
+            client++;
             }
         } catch (IOException ex) {
             ex.printStackTrace();

@@ -31,10 +31,12 @@ class ServerThread extends Thread {
     public  DataInputStream din;
     public  DataOutputStream dout;
     public  StringBuilder sb;
+    public int clientNo;
     public  String fileName, accountID, departmentID;
 
-    ServerThread(Socket clientSocket) {
+    ServerThread(Socket clientSocket,int clientNo) {
         this.socket = clientSocket;
+        this.clientNo=clientNo;
         file = new File("Server Files");
         files = new File[0];
         sb = new StringBuilder();
@@ -47,13 +49,32 @@ class ServerThread extends Thread {
             din = new DataInputStream(socket.getInputStream());
             dout = new DataOutputStream(socket.getOutputStream());
             String clientName;
+            String pin="2345";
+            String userpin;
             int i;
             boolean stopFlag = false;				//Flag which stops the application when set true
 
+            System.out.println("Server says to Client "+clientNo+":Enter your name");
             dout.writeUTF("Enter your name ");
             clientName = din.readUTF();
+            
+            System.out.println("Client "+clientNo+" Replays: My name is "+clientName);
+            
+            dout.writeUTF(clientName+" Enter the secret PIN to access the files");
+            
+            userpin = din.readUTF();
+            
+            while(!pin.equalsIgnoreCase(userpin))
+            {
+            dout.writeUTF(clientName+" wrong pin number please try again.");
+            userpin = din.readUTF();
+            }
+            dout.writeUTF("ok");
 
+            
             dout.writeUTF("Welcome, " + clientName);
+            
+            
 
             while (!stopFlag) {
                 sb.append("Choose an option\n"
@@ -67,6 +88,8 @@ class ServerThread extends Thread {
 
                 switch (i) {
                     case 1:
+                        
+                        System.out.println("Client "+clientNo+"("+clientName+"): Click option 1");
                         this.inputFileName();				//asks client to input fileName to download
 
                         //departmentID and accountID are obtained from the inputed filename
@@ -77,6 +100,7 @@ class ServerThread extends Thread {
                         break;
 
                     case 2:
+                        System.out.println("Client "+clientNo+"("+clientName+"): Click option 2");
                         file = new File("Server Files");
                         files = file.listFiles();
                         int j = 0;
@@ -143,7 +167,7 @@ class ServerThread extends Thread {
 
                                     //departmentID and accountID are obtained from the inputed filename
                                     file = new File("Server Files\\" + departmentID + "-" + accountID + ".pdf");
-
+                                    System.out.println("Sending file to Client "+clientNo+"("+clientName+"):"+ departmentID + "-" + accountID + ".pdf");
                                     this.sendFile(file, accountID, departmentID);				//the file if present, is sent over the network
                                     file = new File("Server Files");					//file path is reset to the root directory
                                     break;

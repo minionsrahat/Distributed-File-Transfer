@@ -28,7 +28,7 @@ public class FileTransfer_Client {
 
     public static void main(String[] args) {
         try {
-            Socket clientSocket = new Socket("192.168.1.7", 6969);
+            Socket clientSocket = new Socket("localhost", 2480);
             //host is 'localhost' when Client and Server are on the same machine, input IpAaddress when both are on different machines
              FileTransfer_Client obj=new FileTransfer_Client(clientSocket);
 //            DataInputStream din = new DataInputStream(clientSocket.getInputStream());
@@ -38,10 +38,25 @@ public class FileTransfer_Client {
             String str = "";
             int i = 0;
 
+            //Enter Name
             str =obj.din.readUTF();
             System.out.println("Server: " + str);
-
             obj.dout.writeUTF(br.readLine());
+            
+            
+            //Enter PIN
+            str =obj.din.readUTF();
+            System.out.println("Server: " + str);
+            obj.dout.writeUTF(br.readLine());
+            str =obj.din.readUTF();
+            
+            System.out.println("Server: " + str);
+            while(!str.equalsIgnoreCase("ok")){
+                 obj.dout.writeUTF(br.readLine());
+                 str =obj.din.readUTF();
+                 System.out.println("Server: " + str);
+            }
+            
             str =obj.din.readUTF();
             System.out.println("Server: " + str);
 
@@ -57,7 +72,7 @@ public class FileTransfer_Client {
                             System.out.println("        Please Check your Input!");
                         }
                     } catch (NumberFormatException ex) {
-                        System.out.println("        Input should be a Number. Please Try again!");
+                        System.out.println("Input should be a Number. Please Try again!");
                         i = -1;
                     }
                 } while (!(1 <= i && i <= 3));				//loops until i matches the desired values
