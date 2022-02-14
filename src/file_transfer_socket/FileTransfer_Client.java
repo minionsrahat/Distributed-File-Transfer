@@ -28,12 +28,12 @@ public class FileTransfer_Client {
 
     public static void main(String[] args) {
         try {
-            Socket clientSocket = new Socket("localhost", 2480);
+             Socket clientSocket = new Socket("localhost", 2480);
             //host is 'localhost' when Client and Server are on the same machine, input IpAaddress when both are on different machines
              FileTransfer_Client obj=new FileTransfer_Client(clientSocket);
 //            DataInputStream din = new DataInputStream(clientSocket.getInputStream());
 //            DataOutputStream dout = new DataOutputStream(clientSocket.getOutputStream());
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
             String str = "";
             int i = 0;
@@ -187,7 +187,7 @@ public class FileTransfer_Client {
 
             bos.close();
 
-            System.out.println("        File " + fileName + " Successfully Downloaded!");
+            System.out.println("        File " + fileName + " Successfully Downloaded! to C:\\Users\\Documents\\NetBeansProjects\\DS PROJECT\\Client Files");
             dout.writeInt(0);						//writeInt is used to reset if any bytes are present in the buffer after the file transfer
         } catch (IOException ex) {
             ex.printStackTrace();

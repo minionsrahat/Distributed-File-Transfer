@@ -7,11 +7,16 @@
 
 ### Server sends File Options to the Client and the Client responds to them.
 
-Project Demo: [File Transfer](https://replit.com/@MajinVegetaSSJ2/File-Transfer-Java-Socket-Programming?v=1)
 
 ---
 
+User Validation
+![UserValidation](https://github.com/04xRaynal/File-Transfer_Java-Socket/blob/f31902f15e13b287a3959d24d094dce8cb81c86c/Captured%20Images/User Validation.PNG)
+
+
+
 The File options are:
+
 
 1) Download files from the Server Directory onto the Client Machine via FileName
 

@@ -23,7 +23,7 @@ public class FileTransfer_Server {
     public static void main(String[] args) {
 
         try {
-            ServerSocket serverSocket = new ServerSocket(2480);					//Server Port: 69696
+            ServerSocket serverSocket = new ServerSocket(2480);					//Server Port: 2480
 
             System.out.println("Server Started...");
             int client=1;

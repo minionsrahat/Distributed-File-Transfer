@@ -5,8 +5,24 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Server {
+    
+    public static int P=1;
+    
+    public static void Semawait(){
+       
+        while(P<=0);
+        P--;
+            
+    }
+    public static void Signal(){
+      
+        P++;
+            
+    }
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(22222);
         System.out.println("Server Started..");
@@ -47,16 +63,25 @@ class ServerThread implements Runnable {
                 if(cMsg==null)
                     break;
                 System.out.println("From Client: " + (String) cMsg);
+                
+                Server.Semawait();
+                
+                Thread.sleep(5000);
 
                 String serverMsg = (String) cMsg;
                 serverMsg = serverMsg.toUpperCase();
-
+                
+ 
                 //send to client..
                 oos.writeObject(serverMsg);
+                Server.Signal();
+                
             }
 
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
